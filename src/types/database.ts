@@ -55,24 +55,28 @@ export interface Database {
     Tables: {
       users: {
         Row: User;
-        Insert: Omit<User, "id" | "created_at">;
-        Update: Partial<Omit<User, "id" | "created_at">>;
+        Insert: Partial<User> & { email: string };
+        Update: Partial<User>;
       };
       api_providers: {
         Row: ApiProvider;
-        Insert: Omit<ApiProvider, "id" | "created_at" | "updated_at">;
-        Update: Partial<Omit<ApiProvider, "id" | "created_at">>;
+        Insert: Partial<ApiProvider> & { user_id: string; provider_name: string; api_key_encrypted: string };
+        Update: Partial<ApiProvider>;
       };
       usage_logs: {
         Row: UsageLog;
-        Insert: Omit<UsageLog, "id" | "created_at">;
-        Update: Partial<Omit<UsageLog, "id" | "created_at">>;
+        Insert: Partial<UsageLog> & { provider_id: string; date: string; cost_usd: number };
+        Update: Partial<UsageLog>;
       };
       alerts: {
         Row: Alert;
-        Insert: Omit<Alert, "id" | "created_at" | "updated_at">;
-        Update: Partial<Omit<Alert, "id" | "created_at">>;
+        Insert: Partial<Alert> & { user_id: string; name: string; type: AlertType; threshold_amount: number; status: AlertStatus };
+        Update: Partial<Alert>;
       };
     };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 }
