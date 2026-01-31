@@ -3,6 +3,14 @@ import { stripe, PLANS } from "@/lib/stripe";
 import { NextResponse } from "next/server";
 
 export async function POST() {
+  // Stripe is disabled
+  if (!stripe) {
+    return NextResponse.json(
+      { error: "Stripe is not configured. Billing is disabled." },
+      { status: 503 }
+    );
+  }
+
   try {
     const supabase = createClient();
     const {
