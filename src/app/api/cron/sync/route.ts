@@ -4,10 +4,10 @@ import { decrypt } from "@/lib/encryption";
 import { fetchOpenAIUsage } from "@/lib/api-clients/openai";
 import { subDays } from "date-fns";
 
-// Use service role for cron (no user context)
+// Use secret key for cron (no user context, bypasses RLS)
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SECRET_KEY!
 );
 
 export async function GET(request: Request) {
